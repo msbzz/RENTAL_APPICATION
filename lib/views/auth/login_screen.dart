@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rental_application/controllers/auth_controller.dart';
 import 'package:rental_application/core/common/widgets/custom_button.dart';
 import 'package:rental_application/core/common/widgets/custom_textfield.dart';
@@ -17,6 +18,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _authController = AuthController();
   final _formKey = GlobalKey<FormState>();
   bool _obscurePassword = true;
   bool _isLoading = false;
@@ -147,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   CustomButton(
                     text: 'Sign In',
                     isLoading: _isLoading,
-                    onPressed: () {},
+                    onPressed: _handleLogin,
                     height: 56.h,
                   ),
                   SizedBox(height: 24.h),
@@ -160,6 +162,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           fontSize: 14.sp,
                         ),
                       ),
+                      TextButton(
+                        onPressed: () {},
+                        style: TextButton.styleFrom(
+                          foregroundColor: AppColors.primary,
+                          padding: EdgeInsets.symmetric(horizontal: 8.w),
+                        ),
+                        child: Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -169,6 +185,33 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _handleLogin() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() => _isLoading = true);
+      try {
+        final user = await _authController.loginWithRole(
+          _emailController.text,
+          _passwordController.text,
+          _selectedRole,
+        );
+
+        if (mounted && user != null) {
+          context.go(
+            user.role == UserRole.landlord ? 'landlord/dasgboard' : 'home',
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(e.toString())));
+        }
+      } finally {
+        if (mounted) setState(() => _isLoading = false);
+      }
+    }
   }
 
   Widget _buildRoleTab(UserRole role, String label) {
