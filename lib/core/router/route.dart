@@ -1,10 +1,14 @@
 import 'package:go_router/go_router.dart';
 import 'package:rental_application/main_layout.dart';
 import 'package:rental_application/views/auth/login_screen.dart';
+import 'package:rental_application/views/booking/bookings_list/booking_list_screen.dart';
+import 'package:rental_application/views/chat/messages_screen.dart';
+import 'package:rental_application/views/favorites/favorites_screen.dart';
 import 'package:rental_application/views/home/home_screen.dart';
 import 'package:rental_application/views/landlord/landlord_dashboard/landlord_dashboard_screen.dart';
 import 'package:rental_application/views/landlord_layout.dart';
 import 'package:rental_application/views/onboarding/onboarding_screen.dart';
+import 'package:rental_application/views/profile/profile_screen.dart';
 import 'package:rental_application/views/splash/splash_screen.dart';
 
 final router = GoRouter(
@@ -33,6 +37,22 @@ final router = GoRouter(
           path: '/home',
           builder: (context, state) => const HomeScreen(),
           routes: const [],
+        ),
+        GoRoute(
+          path: '/favorites',
+          builder: (context, state) => const FavoritesScreen(),
+        ),
+        GoRoute(
+          path: '/booking',
+          builder: (context, state) => const BookingListScreen(),
+        ),
+        GoRoute(
+          path: '/messages',
+          builder: (context, state) => const MessagesScreen(),
+        ),
+        GoRoute(
+          path: '/profile',
+          builder: (context, state) => const ProfileScreen(),
         ),
       ],
     ),

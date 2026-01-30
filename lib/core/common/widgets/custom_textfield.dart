@@ -30,6 +30,7 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       keyboardType: keyboardType,
       obscureText: obscureText,
+      onChanged: onChanged,
       style: TextStyle(fontSize: 16.sp, color: AppColors.textPrimary),
       decoration: InputDecoration(
         labelText: label,
