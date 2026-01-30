@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             TweenAnimationBuilder(
               tween: Tween<double>(begin: 0.0, end: 1.0),
-              duration: Duration(milliseconds: 1500),
+              duration: Duration(milliseconds: 2500),
               builder: (context, double value, child) {
                 return Transform.scale(
                   scale: value,

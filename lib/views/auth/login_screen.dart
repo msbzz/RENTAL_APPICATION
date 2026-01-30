@@ -109,6 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     label: 'Password',
                     prefixIcon: Icons.password_outlined,
                     keyboardType: TextInputType.visiblePassword,
+                    obscureText: _obscurePassword,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your password';
@@ -199,7 +200,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
         if (mounted && user != null) {
           context.go(
-            user.role == UserRole.landlord ? 'landlord/dasgboard' : 'home',
+            user.role == UserRole.landlord ? '/landlord/dashboard' : '/home',
           );
         }
       } catch (e) {
