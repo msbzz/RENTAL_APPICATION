@@ -43,7 +43,7 @@ final router = GoRouter(
           builder: (context, state) => const FavoritesScreen(),
         ),
         GoRoute(
-          path: '/booking',
+          path: '/bookings',
           builder: (context, state) => const BookingListScreen(),
         ),
         GoRoute(

@@ -20,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   final _authController = AuthController();
   final _formKey = GlobalKey<FormState>();
-  bool _obscurePassword = true;
+  bool _obscurePassword = false;
   bool _isLoading = false;
   UserRole _selectedRole = UserRole.tenant;
 
@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: _passwordController,
                     prefixIcon: Icons.password_outlined,
                     keyboardType: TextInputType.visiblePassword,
-                    obscureText: _obscurePassword,
+                    obscureText: !_obscurePassword,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your password';
