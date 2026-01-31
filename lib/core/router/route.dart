@@ -5,7 +5,10 @@ import 'package:rental_application/views/booking/bookings_list/booking_list_scre
 import 'package:rental_application/views/chat/messages_screen.dart';
 import 'package:rental_application/views/favorites/favorites_screen.dart';
 import 'package:rental_application/views/home/home_screen.dart';
+import 'package:rental_application/views/landlord/landlord_bookings/landlord_bookings_screen.dart';
 import 'package:rental_application/views/landlord/landlord_dashboard/landlord_dashboard_screen.dart';
+import 'package:rental_application/views/landlord/landlord_profile/landlord_profile_screen.dart';
+import 'package:rental_application/views/landlord/landlord_properties/landlord_properties_screen.dart';
 import 'package:rental_application/views/landlord_layout.dart';
 import 'package:rental_application/views/onboarding/onboarding_screen.dart';
 import 'package:rental_application/views/profile/profile_screen.dart';
@@ -65,6 +68,22 @@ final router = GoRouter(
         GoRoute(
           path: '/landlord/dashboard',
           builder: (context, state) => const LandlordDashboardScreen(),
+        ),
+        GoRoute(
+          path: '/landlord/properties',
+          builder: (context, state) => const LandlordPropertiesScreen(),
+        ),
+        GoRoute(
+          path: '/landlord/messages',
+          builder: (context, state) => const MessagesScreen(),
+        ),
+        GoRoute(
+          path: '/landlord/bookings',
+          builder: (context, state) => const LandlordBookingsScreen(),
+        ),
+        GoRoute(
+          path: '/landlord/profile',
+          builder: (context, state) => const LandlordProfileScreen(),
         ),
       ],
     ),
