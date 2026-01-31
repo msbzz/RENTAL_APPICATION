@@ -131,7 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     label: 'Confirm Password',
                     prefixIcon: Icons.lock_outline,
                     keyboardType: TextInputType.visiblePassword,
-                    obscureText: _obscurePassword,
+                    obscureText: _obscureConfirmePassword,
                     suffixIcon: IconButton(
                       onPressed: () => setState(
                         () => _obscureConfirmePassword =
@@ -146,15 +146,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 16.h),
+                  SizedBox(height: 32.h),
                   AnimatedContainer(
                     duration: Duration(milliseconds: 300),
                     width: double.infinity,
                     height: 56.h,
                     child: CustomButton(
                       text: 'Create Account',
-                      onPressed: () {},
+                      onPressed: () => _handleRegister,
+                      isLoading: _isLoading,
                     ),
+                  ),
+                  SizedBox(height: 24.h),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Already have an account?',
+                        style: TextStyle(
+                          color: AppColors.textSecondary,
+                          fontSize: 14.sp,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () => context.go('/auth'),
+                        child: Text(
+                          'Sign In',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -186,5 +210,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _handleRegister() async {
+    if (_formKey.currentState!.validate()) {
+      if (_passwordController.text != _confirmPasswordController.text) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Passwors do not match')));
+        return;
+      }
+
+      setState(() => _isLoading = true);
+
+      try {
+        final user = await _authController.register(
+          fullNama: _fullNameController.text,
+          email: _emailController.text,
+          password: _passwordController.text,
+          role: _selectedRole,
+        );
+
+        if (mounted && user != null) {
+          context.go(
+            _selectedRole == UserRole.landlord
+                ? '/landlord/dashboard'
+                : '/home',
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(e.toString())));
+        }
+      } finally {
+        if (mounted) setState(() => _isLoading = false);
+      }
+    }
   }
 }
